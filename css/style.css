@@ -110,10 +110,9 @@ body {
   background-color: #fff;
   border: 1px solid #ddd;
   box-shadow: 0 0 2px #ddd;
-  animation: show 2s ease;
-  opacity: 0.7;
+  opacity: 0.8;
   overflow: hidden;
-  transition: 2s;
+  animation: showpost 3s ease;
 }
 .posts .post:first-child {
   margin-top: 0;
@@ -132,36 +131,36 @@ body {
 .posts .post-meta {
   color: #bababa;
 }
-@-moz-keyframes show {
-  from {
-    height: 0;
+@-moz-keyframes showpost {
+  0% {
+    opacity: 0.1;
   }
-  to {
-    height: 140px;
-  }
-}
-@-webkit-keyframes show {
-  from {
-    height: 0;
-  }
-  to {
-    height: 140px;
+  100% {
+    opacity: 0.8;
   }
 }
-@-o-keyframes show {
-  from {
-    height: 0;
+@-webkit-keyframes showpost {
+  0% {
+    opacity: 0.1;
   }
-  to {
-    height: 140px;
+  100% {
+    opacity: 0.8;
   }
 }
-@keyframes show {
-  from {
-    height: 0;
+@-o-keyframes showpost {
+  0% {
+    opacity: 0.1;
   }
-  to {
-    height: 140px;
+  100% {
+    opacity: 0.8;
+  }
+}
+@keyframes showpost {
+  0% {
+    opacity: 0.1;
+  }
+  100% {
+    opacity: 0.8;
   }
 }
 .archive {
