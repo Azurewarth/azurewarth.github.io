@@ -268,3 +268,72 @@ body {
 .resume {
   text-align: center;
 }
+.title-container {
+  width: 100px;
+  height: 100px;
+  border-radius: 300px;
+  overflow: hidden;
+  display: block;
+  margin: 20px auto;
+}
+.title-img {
+  width: 150px;
+  height: 100px;
+  border-radius: 300px;
+  margin-left: -26px;
+  opacity: 0.8;
+}
+.arrow {
+  display: block;
+  margin: auto auto;
+  width: 30px;
+  height: 30px;
+  border-left: 3px solid #333;
+  border-bottom: 3px solid #333;
+  transform: rotateZ(-45deg);
+  animation: shrink 3s infinite;
+}
+@-moz-keyframes shrink {
+  0% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0.3;
+  }
+}
+@-webkit-keyframes shrink {
+  0% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0.3;
+  }
+}
+@-o-keyframes shrink {
+  0% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0.3;
+  }
+}
+@keyframes shrink {
+  0% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0.3;
+  }
+}
