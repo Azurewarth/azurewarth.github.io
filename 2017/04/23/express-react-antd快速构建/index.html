@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"name="viewport">
+  <title>Azurewarth</title>
+  <link rel="stylesheet" href="/./css/style.css">
+  <script src="/./js/canvas.js"></script>
+</head>
+  <body>
+    <header class="header">
+    <div class="blog-title">
+        <a href="https://github.com/Azurewarth" class="logo">Azurewarth</a>
+    </div>
+    <div class="blog-subtitle">
+        resume &amp; blog -- 247
+    </div>
+    <ul class="menu">
+        
+        <li class="menu-item">
+            <a href="/" class="menu-item-link">Home</a>
+        </li>
+        
+        <li class="menu-item">
+            <a href="/archives" class="menu-item-link">Archive</a>
+        </li>
+        
+        <li class="menu-item">
+            <a href="https://github.com/Azurewarth" class="menu-item-link">Github</a>
+        </li>
+        
+    </ul> 
+</header> 
+
+    <main class="main">
+      <article class="post">
+  <div class="post-title">
+    <h2 class="title">express_react_antd快速构建</h2>
+  </div>
+   <div class="post-meta">
+    <span class="post-time"></span>
+  </div>
+  <div class="post-content">
+    <h5 id="项目快速构建，用于快速开始一个react项目，使用的组件库为ant-design，方便快捷，组件种类多，适用性强。"><a href="#项目快速构建，用于快速开始一个react项目，使用的组件库为ant-design，方便快捷，组件种类多，适用性强。" class="headerlink" title="项目快速构建，用于快速开始一个react项目，使用的组件库为ant-design，方便快捷，组件种类多，适用性强。"></a>项目快速构建，用于快速开始一个react项目，使用的组件库为ant-design，方便快捷，组件种类多，适用性强。</h5><a id="more"></a>
+<ol>
+<li><p>安装快速搭建脚手架<strong><em>create-react-app</em></strong>。使用<strong><em>yarn</em></strong>包管理工具。</p>
+<figure class="highlight dsconfig"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="string">npm </span><span class="string">install </span><span class="string">yarn </span>-g</div><div class="line"></div><div class="line"><span class="string">npm </span><span class="string">install </span><span class="built_in">create-react-app</span> -g</div><div class="line"></div><div class="line"><span class="built_in">create-react-app</span> <span class="string">"project-package"</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>进入<strong><em>project-package</em></strong>目录下，安装依赖后可以直接启动项目。</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">yarn <span class="keyword">add</span><span class="bash"></span></div><div class="line"></div><div class="line">yarn start</div></pre></td></tr></table></figure>
+</li>
+<li><p>使用<strong><em>express-generator</em></strong>快速构建node层服务框架。</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">npm <span class="keyword">install</span> express-generator -g</div><div class="line"></div><div class="line">express my-app</div><div class="line"></div><div class="line">npm <span class="keyword">install</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>进入<strong><em>my-app</em></strong>目录，可以直接启动<strong><em>node</em></strong>层服务。</p>
+<figure class="highlight dos"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> my-app</div><div class="line"></div><div class="line">npm <span class="built_in">start</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>将<strong><em>project-package</em></strong>放入<strong><em>my-app</em></strong>目录内，进入<strong><em>project-package</em></strong>目录下的<strong><em>config</em></strong>文件夹中修改<strong><em>webpack</em></strong>打包文件，将输出目录换成<strong><em>my-app</em></strong>目录下的<strong><em>public</em></strong>文件夹。<strong><em>webpack</em></strong>打包后，文件直接进入<strong><em>public</em></strong>文件夹，启动<strong><em>node</em></strong>服务后，监听此文件夹。</p>
+</li>
+<li><p><strong><em>my-app</em></strong>文件夹下，<strong><em>routes</em></strong>中是服务编写的主要位置。</p>
+</li>
+<li><p>适当修改目录结构，便于开发需求，如下。</p>
+</li>
+</ol>
+<h3 id="目录如下"><a href="#目录如下" class="headerlink" title="目录如下"></a>目录如下</h3><blockquote>
+<p>bin</p>
+<p>project_package</p>
+<p>public</p>
+<p>routes</p>
+<p>app.js</p>
+<p>package.json</p>
+</blockquote>
+<p>使用node的Express框架，bin中位执行文件。routes中是所有的转发设置。</p>
+<blockquote>
+<p>routes</p>
+<blockquote>
+<p>server.js</p>
+</blockquote>
+</blockquote>
+<p>进入根目录，npm install安装依赖。</p>
+<hr>
+<p>project_package是开发react-antd项目目录</p>
+<blockquote>
+<p>project_package</p>
+<blockquote>
+<p>config</p>
+<p>public</p>
+<p>scripts</p>
+<p>src</p>
+<p>……</p>
+</blockquote>
+</blockquote>
+<p>config是配置包，public是静态文件包，scripts是脚本包，src是开发目录。</p>
+<blockquote>
+<p>public</p>
+<blockquote>
+<p>index.html</p>
+</blockquote>
+</blockquote>
+<p>public包是index页面和其他静态文件，比如logo。</p>
+<blockquote>
+<p>src</p>
+<blockquote>
+<p>pages</p>
+<p>redux</p>
+<p>router</p>
+<p>utils</p>
+<p>app.js</p>
+<p>index.js</p>
+</blockquote>
+</blockquote>
+<p>src包括页面，路由等。</p>
+<p>进入project_package使用npm install安装依赖。</p>
+<hr>
+<p><strong><em>dev：</em></strong> 在project_package目录下，<strong>yarn start</strong>，<a href="http://localhost:3000%E8%BF%9B%E8%A1%8C%E5%BC%80%E5%8F%91%E3%80%82/" target="_blank" rel="external">http://localhost:3000进行开发。</a></p>
+<p><strong><em>build：</em></strong> 在project_package目录下， <strong>npm run build</strong>， 会在根目录public中生成打包文件。</p>
+<p><strong><em>production：</em></strong> 打打包后，在<strong>根目录</strong>下， <strong>npm start</strong>， 开启node服务，监听<a href="http://localhost:3000%E3%80%82/" target="_blank" rel="external">http://localhost:3000。</a></p>
+
+  </div>
+</article>
+    </main>
+    <div>
+	<canvas id="background-canvas"></canvas>
+</div>
+  </body>
+</html>
