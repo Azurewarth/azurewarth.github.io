@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"name="viewport">
+  <title>Azurewarth</title>
+  <link rel="stylesheet" href="/./css/style.css">
+  <script src="/./js/canvas.js"></script>
+</head>
+  <body>
+    <header class="header">
+    <div class="blog-title">
+        <a href="https://github.com/Azurewarth" class="logo">Azurewarth</a>
+    </div>
+    <div class="blog-subtitle">
+        resume &amp; blog -- 247
+    </div>
+    <ul class="menu">
+        
+        <li class="menu-item">
+            <a href="/" class="menu-item-link">Home</a>
+        </li>
+        
+        <li class="menu-item">
+            <a href="/archives" class="menu-item-link">Archive</a>
+        </li>
+        
+        <li class="menu-item">
+            <a href="https://github.com/Azurewarth" class="menu-item-link">Github</a>
+        </li>
+        
+    </ul> 
+</header> 
+
+    <main class="main">
+      <article class="post">
+  <div class="post-title">
+    <h2 class="title">Tencent cloud初步使用</h2>
+  </div>
+   <div class="post-meta">
+    <span class="post-time"></span>
+  </div>
+  <div class="post-content">
+    <h5 id="1-登陆注册，领取或购买腾讯云服务-https-www-qcloud-com"><a href="#1-登陆注册，领取或购买腾讯云服务-https-www-qcloud-com" class="headerlink" title="1. 登陆注册，领取或购买腾讯云服务 (https://www.qcloud.com/)"></a>1. 登陆注册，领取或购买腾讯云服务 (<a href="https://www.qcloud.com/" target="_blank" rel="external">https://www.qcloud.com/</a>)</h5><p>​    购买或领取服务后，可以选择服务器操作系统。选择<strong><em>Ubuntu 14版 32位</em></strong>。</p>
+<h5 id="2-选择云产品中的云服务器。"><a href="#2-选择云产品中的云服务器。" class="headerlink" title="2. 选择云产品中的云服务器。"></a>2. 选择<strong><em>云产品</em></strong>中的<strong><em>云服务器</em></strong>。</h5><p><img src="/2017/05/01/Tencent-cloud初步使用/1.png" width="600px"></p>
+<h5 id="3-可以看到服务器选项。首先创建秘钥。"><a href="#3-可以看到服务器选项。首先创建秘钥。" class="headerlink" title="3. 可以看到服务器选项。首先创建秘钥。"></a>3. 可以看到服务器选项。首先创建秘钥。</h5><p><img src="/2017/05/01/Tencent-cloud初步使用/2.png" width="600px">    </p>
+<p>​    秘钥创建好了后，能够下载私钥文件，此时服务器已经可以运行。</p>
+<p><img src="/2017/05/01/Tencent-cloud初步使用/3.png" width="600px"></p>
+<p>​    可以通过<strong><em>( windows cmd or mac terminal)</em></strong>直接登录云服务器。</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">ssh</span> -i <span class="string">"key文件"</span> user<span class="variable">@ip</span></div></pre></td></tr></table></figure>
+<p>​    user是登录用户名。选择其他操作系统可以直接用<strong><em>root</em></strong>登录，选择<strong><em>Ubuntu</em></strong>操作系统，使用用户名<strong><em>ubuntu</em></strong>登录。</p>
+<h5 id="4-设置登录名以及密码直接登录"><a href="#4-设置登录名以及密码直接登录" class="headerlink" title="4. 设置登录名以及密码直接登录"></a>4. 设置登录名以及密码直接登录</h5><p>​    直接通过点击<strong><em>登录</em></strong>进入命令行。</p>
+<p><img src="/2017/05/01/Tencent-cloud初步使用/4.png" width="600px"></p>
+<p>​    使用用户名和密码登录。进入<strong><em>etc/ssh/</em></strong>文件夹。</p>
+<p><img src="/2017/05/01/Tencent-cloud初步使用/5.png" width="600px"></p>
+<p>​    看到最后一个文件<strong><em>sshd_config</em></strong>。使用<strong><em>vim</em></strong>打开修改。</p>
+<p><img src="/2017/05/01/Tencent-cloud初步使用/6.png" width="600px"></p>
+<p>​    找到 <strong>PasswordAuthentication</strong> 改为 <strong>yes</strong>。</p>
+<p>​    使用 <strong>ubuntu</strong> 和 密码直接远程登录。</p>
+<p><img src="/2017/05/01/Tencent-cloud初步使用/7.png" width="600px"></p>
+<h5 id="5-安装相关所需"><a href="#5-安装相关所需" class="headerlink" title="5. 安装相关所需"></a>5. 安装相关所需</h5><p>​    <strong>ubuntu</strong>可以使用<strong><em>apt-get</em></strong>直接安装相关需要的软件，但是不建议这样做，因为安装的软件都不是最新版本，可能会带来不可预料的问题。</p>
+<p>​    建议使用 <strong><em>wget</em></strong>直接获得。</p>
+<p>​    比如安装<strong><em>nodejs</em></strong>，进入<strong><em>nodejs/dist</em></strong>。进入<strong><em>v7.9.0</em></strong>文件夹，拷贝相关路径。</p>
+<p><img src="/2017/05/01/Tencent-cloud初步使用/8.png" width="600px"></p>
+<p>​    进入命令行，使用<strong><em>wget url</em></strong>直接下载。然后解压，将所有文件拷贝放入<strong><em>/usr/local/node</em></strong>中。</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">wget https://nodejs.org/dist/v7.<span class="number">9.0</span>/<span class="keyword">node</span><span class="title">-v7</span>.<span class="number">9.0</span>-linux-x86.tar.gz</div><div class="line">tar -zxvf <span class="keyword">node</span><span class="title">-v7</span>.<span class="number">9.0</span>-linux-x86.tar.gz</div><div class="line">cd <span class="keyword">node</span><span class="title">-v7</span>.<span class="number">9.0</span>-linux-x86</div><div class="line">mv * /usr/local/<span class="keyword">node</span><span class="title"></span></div></pre></td></tr></table></figure>
+<p>​    可以配制全局环境。</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">vim</span> ~/.bashrc</div></pre></td></tr></table></figure>
+<p><img src="/2017/05/01/Tencent-cloud初步使用/9.png" width="600px"></p>
+<p>​    如上图，添加代码。</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">export <span class="keyword">NODE</span><span class="title">=/usr</span>/local/<span class="keyword">node</span></div><div class="line"><span class="title">export</span> <span class="attr">PATH=</span>$&#123;<span class="keyword">NODE</span><span class="title">&#125;/bin</span>:$PATH</div></pre></td></tr></table></figure>
+<p>​    安装完毕，再任何地方使用<strong><em>node</em></strong>和<strong><em>npm</em></strong>命令。</p>
+<p><img src="/2017/05/01/Tencent-cloud初步使用/10.png" width="600px"></p>
+
+  </div>
+</article>
+    </main>
+    <div>
+	<canvas id="background-canvas"></canvas>
+</div>
+  </body>
+</html>
