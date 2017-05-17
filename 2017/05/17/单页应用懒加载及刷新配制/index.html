@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"name="viewport">
+  <title>Azurewarth</title>
+  <link rel="stylesheet" href="/./css/style.css">
+  <script src="/./js/canvas.js"></script>
+</head>
+  <body>
+    <header class="header">
+    <div class="blog-title">
+        <a href="https://github.com/Azurewarth" class="logo">Azurewarth</a>
+    </div>
+    <div class="blog-subtitle">
+        resume &amp; blog -- 247
+    </div>
+    <ul class="menu">
+        
+        <li class="menu-item">
+            <a href="/" class="menu-item-link">Home</a>
+        </li>
+        
+        <li class="menu-item">
+            <a href="/archives" class="menu-item-link">Archive</a>
+        </li>
+        
+        <li class="menu-item">
+            <a href="https://github.com/Azurewarth" class="menu-item-link">Github</a>
+        </li>
+        
+    </ul> 
+</header> 
+
+    <main class="main">
+      <article class="post">
+  <div class="post-title">
+    <h2 class="title">react单页应用懒加载及刷新配制</h2>
+  </div>
+   <div class="post-meta">
+    <span class="post-time"></span>
+  </div>
+  <div class="post-content">
+    <p>目前react，angular，vue都是开发单页应用的流行框架，流行的打包工具webpack也是主要用来打包单页应用。</p>
+<a id="more"></a>
+<h5 id="1-react单页应用基于的router实现"><a href="#1-react单页应用基于的router实现" class="headerlink" title="1. react单页应用基于的router实现"></a>1. react单页应用基于的router实现</h5><p>目前官方<strong><em>react-router 4.0</em></strong>已经发布，相比于之前的版本，说实话其实并不好用，只是更接近了<strong><em>react</em></strong>的组件化概念。</p>
+<p><strong>安装</strong>（和之前不太一样，光安装react-router是不行的，要装react-router-dom）</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm <span class="keyword">install</span> react-router-dom <span class="comment">--save</span></div></pre></td></tr></table></figure>
+<p><strong>使用</strong>（各种组件可以分类导入）</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> &#123; Router <span class="keyword">as</span> BrowserRouter, Route, Redirect &#125; <span class="keyword">from</span> <span class="string">'react-router-dom'</span></div></pre></td></tr></table></figure>
+<p><strong>写法</strong>（使用<strong>es6 react</strong>写法）</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span></div><div class="line"><span class="keyword">import</span> home <span class="keyword">from</span> <span class="string">'home.js'</span>                  <span class="comment">// 引入home组件</span></div><div class="line"><span class="keyword">import</span> other <span class="keyword">from</span> <span class="string">'other.js'</span>			   <span class="comment">// 引入other组件</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">TestRouter</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</div><div class="line">  <span class="keyword">constructor</span>(props) &#123;</div><div class="line">    <span class="keyword">super</span>(props)</div><div class="line">  &#125;</div><div class="line">  render() &#123;</div><div class="line">    <span class="keyword">return</span> (</div><div class="line">      &lt;Router&gt;</div><div class="line">      	&lt;Route exact path="/" component=&#123;home&#125; /&gt;</div><div class="line">      	&lt;Route path="/other" component=&#123;other&#125; /&gt;</div><div class="line">      &lt;/Router&gt;</div><div class="line">    )</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">export default TestRouter;</div></pre></td></tr></table></figure>
+<p><strong>懒加载</strong>（目前react-router 4.0官方并没与给出懒加载方案，找了一个个人开发的）</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm <span class="keyword">install</span> lazy-route <span class="comment">--save</span></div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> LazyRoute <span class="keyword">from</span> <span class="string">'lazy-route'</span></div><div class="line"></div><div class="line">......</div><div class="line"></div><div class="line">&lt;Route&gt;</div><div class="line">	<span class="xml"><span class="tag">&lt;<span class="name">LazyRoute</span> <span class="attr">path</span>=<span class="string">"/"</span> <span class="attr">component</span>=<span class="string">&#123;import(</span>'<span class="attr">home.js</span>')&#125; /&gt;</span></span></div><div class="line"><span class="tag">&lt;/<span class="name">Route</span>&gt;</span></div><div class="line">&lt;Route&gt;</div><div class="line">	<span class="xml"><span class="tag">&lt;<span class="name">LazyRoute</span> <span class="attr">path</span>=<span class="string">"/"</span> <span class="attr">component</span>=<span class="string">&#123;import(</span>'<span class="attr">home.js</span>')&#125; /&gt;</span></span></div><div class="line"><span class="tag">&lt;/<span class="name">Route</span>&gt;</span></div><div class="line"></div><div class="line">......</div></pre></td></tr></table></figure>
+<p>chunk打包还是webpack配合使用<strong><em>new</em></strong> <strong>webpack.optimize.CommonChunkPlugin</strong>使用。 </p>
+<h5 id="2-单页应用如果不适用node后台使用nginx转发的刷新问题"><a href="#2-单页应用如果不适用node后台使用nginx转发的刷新问题" class="headerlink" title="2. 单页应用如果不适用node后台使用nginx转发的刷新问题"></a>2. 单页应用如果不适用node后台使用nginx转发的刷新问题</h5><p><strong>发布</strong>（使用npm管理工具）</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm <span class="keyword">run</span><span class="bash"> build</span></div></pre></td></tr></table></figure>
+<p>如果不进行nginx或者node配制，单页应用在相对路径刷新后404，因为找不到相对路径下的文件。</p>
+<p><strong>配制</strong>（使用<strong>nginx</strong>转发，比如文件在<strong>/static/public/dist</strong>里面）</p>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="class">server </span>&#123;</div><div class="line">  root <span class="meta-keyword">/static/</span>public</div><div class="line">  location /<span class="class">dist </span>&#123;</div><div class="line">    proxy_pass ...</div><div class="line">    try_files $uri $uri/ <span class="meta-keyword">/dist/</span>html           <span class="comment">// 保证刷新的重定向</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这样就保证刷新的时候还是停留在相对路径页面。</p>
+
+  </div>
+</article>
+    </main>
+    <div>
+	<canvas id="background-canvas"></canvas>
+</div>
+  </body>
+</html>
