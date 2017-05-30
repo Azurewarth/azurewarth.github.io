@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"name="viewport">
+  <title>Azurewarth</title>
+  <link rel="stylesheet" href="/./css/style.css">
+  <script src="/./js/canvas.js"></script>
+</head>
+  <body>
+    <header class="header">
+    <div class="blog-title">
+        <a href="https://github.com/Azurewarth" class="logo">Azurewarth</a>
+    </div>
+    <div class="blog-subtitle">
+        resume &amp; blog -- 247
+    </div>
+    <ul class="menu">
+        
+        <li class="menu-item">
+            <a href="/" class="menu-item-link">Home</a>
+        </li>
+        
+        <li class="menu-item">
+            <a href="/archives" class="menu-item-link">Archive</a>
+        </li>
+        
+        <li class="menu-item">
+            <a href="https://github.com/Azurewarth" class="menu-item-link">Github</a>
+        </li>
+        
+    </ul> 
+</header> 
+
+    <main class="main">
+      <article class="post">
+  <div class="post-title">
+    <h2 class="title">数据结构与级联结构</h2>
+  </div>
+   <div class="post-meta">
+    <span class="post-time"></span>
+  </div>
+  <div class="post-content">
+    <h5 id="级联结构是前端中重要的表格表现模式。在一开始渲染的时候，只给出最基本需要填写或者选择的表单，在进行选择之后，出现下一级需要选择的表单结构，依次向下。"><a href="#级联结构是前端中重要的表格表现模式。在一开始渲染的时候，只给出最基本需要填写或者选择的表单，在进行选择之后，出现下一级需要选择的表单结构，依次向下。" class="headerlink" title="级联结构是前端中重要的表格表现模式。在一开始渲染的时候，只给出最基本需要填写或者选择的表单，在进行选择之后，出现下一级需要选择的表单结构，依次向下。"></a>级联结构是前端中重要的表格表现模式。在一开始渲染的时候，只给出最基本需要填写或者选择的表单，在进行选择之后，出现下一级需要选择的表单结构，依次向下。</h5><a id="more"></a>
+<p>比如：</p>
+<blockquote>
+<p><strong>省份</strong></p>
+<blockquote>
+<p><strong>地区</strong></p>
+<blockquote>
+<p><strong>城市</strong></p>
+<p><strong>区</strong></p>
+<blockquote>
+<p><strong>县</strong></p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<p>选择省份之后，弹出地区选择，然后弹出城市选择，一直到区县。</p>
+<p>前端流行框架中，React或者Vue，都可以通过数据控制DOM结构的变化。然后需求提出要级联反应的时候，如果表单过多，单个操作DOM结构会十分麻烦。以<strong>Vue</strong>为例。</p>
+<pre><code>1. 表单太多，需要使用**vue**通过**v-for**循环实现简介的代码实现，然而导致DOM控制很麻烦。
+2. 其次，如果通过**v-for**循环，直接写入操作的控制，不如**v-if**或者**v-show &amp; v-hide**，再通过操作数据变化体现级联变化，效果并不好，而且，需求多变。
+</code></pre><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">"test"</span> v-<span class="keyword">for</span>=<span class="string">"item in list"</span> v-<span class="keyword">if</span>=<span class="string">"hideORshow"</span>&gt;</div><div class="line">  <span class="xml"><span class="tag">&lt;<span class="name">select</span> <span class="attr">class</span>=<span class="string">"child in item"</span> <span class="attr">v-if</span>=<span class="string">"childToShow"</span>&gt;</span></span></div><div class="line">  	<span class="tag">&lt;<span class="name">option</span> <span class="attr">:id</span>=<span class="string">"child.name"</span>&gt;</span>&#123;&#123; child.name &#125;&#125;<span class="tag">&lt;/<span class="name">option</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">select</span>&gt;</span></div><div class="line">&lt;<span class="regexp">/div&gt;</span></div></pre></td></tr></table></figure>
+<p>所以，在数据组成上改变方式，才能更好的满足需求的可能，也能节省很多代码。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> model=[</div><div class="line">  &#123;</div><div class="line">    <span class="attr">id</span>: <span class="number">1</span>,</div><div class="line">    <span class="attr">name</span>: <span class="string">'province'</span>,</div><div class="line">    <span class="attr">opts</span>: [</div><div class="line">      &#123; <span class="attr">target</span>: <span class="number">1001</span>, <span class="attr">name</span>: <span class="string">'hebei'</span>, <span class="attr">parent</span>: <span class="string">'province'</span> &#125;,</div><div class="line">      &#123; <span class="attr">target</span>: <span class="number">1002</span>, <span class="attr">name</span>: <span class="string">'shanxi'</span>, <span class="attr">parent</span>: <span class="string">'province'</span> &#125;,</div><div class="line">      &#123; <span class="attr">target</span>: <span class="number">1003</span>, <span class="attr">name</span>: <span class="string">'guangdong'</span>, <span class="attr">parent</span>: <span class="string">'province'</span> &#125;,</div><div class="line">      ...</div><div class="line">    ],</div><div class="line">  &#125;,</div><div class="line">  &#123;</div><div class="line">    <span class="attr">id</span>: <span class="number">1001</span>,</div><div class="line">    <span class="attr">name</span>: <span class="string">'hebei'</span>,</div><div class="line">    <span class="attr">opts</span>: [</div><div class="line">      &#123; <span class="attr">target</span>: <span class="number">1001001</span>, <span class="attr">name</span>: <span class="string">"shijiazhuang"</span>, <span class="attr">parent</span>: <span class="string">'hebei'</span> &#125;,</div><div class="line">      ...</div><div class="line">    ],</div><div class="line">  &#125;，</div><div class="line">];</div></pre></td></tr></table></figure>
+<p>基本上，上诉数据的表现就是，省级一层的结构，其实并不包含属于子集的市级的一层，而下一层的<strong>id</strong>其实就是上一层的选项中的<strong>target</strong>。<strong>id</strong>越短的越属于上一层级。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">"test"</span> v-<span class="keyword">for</span>=<span class="string">"item in model"</span> v-<span class="keyword">if</span>=<span class="string">"id.length == 1"</span>&gt;</div><div class="line">  <span class="xml"><span class="tag">&lt;<span class="name">select</span> <span class="attr">class</span>=<span class="string">"child in item.opts"</span>&gt;</span></span></div><div class="line">  	<span class="tag">&lt;<span class="name">option</span> <span class="attr">:id</span>=<span class="string">"child.name"</span> <span class="attr">value</span>=<span class="string">"child.target"</span>&gt;</span>&#123;&#123; child.name &#125;&#125;<span class="tag">&lt;/<span class="name">option</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">select</span>&gt;</span></div><div class="line">&lt;<span class="regexp">/div&gt;</span></div></pre></td></tr></table></figure>
+<p>展示代码如上，级联的表单都会全部渲染，但是先把<strong>id</strong>是初级的显示出来，但是其他的子集表单但是都是隐藏。当选择了选项后，在显示子集的表单。但是需要一个类似<strong>栈</strong>的存储来保留应当显示的子集的所有。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;div ... v-<span class="keyword">if</span>=<span class="string">"id.length == 1 || arr.indexOf(item.id)"</span>&gt;</div><div class="line">  ...</div><div class="line">&lt;<span class="regexp">/div&gt;</span></div></pre></td></tr></table></figure>
+<p>所以，假设数组<strong>arr</strong>用于存储需要渲染的子集，因为<strong>Vue</strong>当数据变化后会自动渲染DOM结构，所以，只关注数据的变化就行。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;div ... v-<span class="keyword">if</span>=<span class="string">"id.length == 1 || arr.indexOf(item.id)"</span>&gt;</div><div class="line">  <span class="xml"><span class="tag">&lt;<span class="name">select</span> <span class="attr">class</span>=<span class="string">"child in item.opts"</span> <span class="attr">onchange</span>=<span class="string">"arrPush()"</span>&gt;</span></span></div><div class="line">  	<span class="tag">&lt;<span class="name">option</span> <span class="attr">:id</span>=<span class="string">"child.name"</span> <span class="attr">value</span>=<span class="string">"child.target"</span>&gt;</span>&#123;&#123; child.name &#125;&#125;<span class="tag">&lt;/<span class="name">option</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">select</span>&gt;</span></div><div class="line">&lt;<span class="regexp">/div&gt;</span></div></pre></td></tr></table></figure>
+<p>如上，当选择选项后，将选项的<strong>value</strong>或<strong>id</strong>直接<strong>push</strong>进入数组中，<strong>v-if</strong>又会再次查找渲染，渲染出子集层。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">state() &#123;</div><div class="line">  <span class="keyword">return</span> &#123;</div><div class="line">    <span class="attr">arr</span>: []，</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">arrPush(e) &#123;</div><div class="line">  <span class="keyword">this</span>.arr.push(e.value);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>到此，其实基本成型。</p>
+<p>优化方向：</p>
+<ol>
+<li>数据结构更合理，方便操作数据和渲染。</li>
+<li>选择选项和取消，并且选择同一层级不同选项改变下一层变化。</li>
+<li>如果有多个层级，只用一个绑定数组作为<strong>栈</strong>，通过一个过滤函数，实现各种变化。</li>
+</ol>
+
+  </div>
+</article>
+    </main>
+    <div>
+	<canvas id="background-canvas"></canvas>
+</div>
+  </body>
+</html>
