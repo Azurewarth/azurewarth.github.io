@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"name="viewport">
+  <title>Azurewarth</title>
+  <link rel="stylesheet" href="/./css/style.css">
+  <script src="/./js/canvas.js"></script>
+</head>
+  <body>
+    <header class="header">
+    <div class="blog-title">
+        <a href="https://github.com/Azurewarth" class="logo">Azurewarth</a>
+    </div>
+    <div class="blog-subtitle">
+        resume &amp; blog -- 247
+    </div>
+    <ul class="menu">
+        
+        <li class="menu-item">
+            <a href="/" class="menu-item-link">Home</a>
+        </li>
+        
+        <li class="menu-item">
+            <a href="/archives" class="menu-item-link">Archive</a>
+        </li>
+        
+        <li class="menu-item">
+            <a href="https://github.com/Azurewarth" class="menu-item-link">Github</a>
+        </li>
+        
+    </ul> 
+</header> 
+
+    <main class="main">
+      <article class="post">
+  <div class="post-title">
+    <h2 class="title">前后端加密通信设计</h2>
+  </div>
+   <div class="post-meta">
+    <span class="post-time"></span>
+  </div>
+  <div class="post-content">
+    <h5 id="前后端通信中，保证安全性是十分重要的，特别是对外开放的To-C端APP，保证用户的信息安全和账户安全尤为重要。"><a href="#前后端通信中，保证安全性是十分重要的，特别是对外开放的To-C端APP，保证用户的信息安全和账户安全尤为重要。" class="headerlink" title="前后端通信中，保证安全性是十分重要的，特别是对外开放的To C端APP，保证用户的信息安全和账户安全尤为重要。"></a>前后端通信中，保证安全性是十分重要的，特别是对外开放的To C端APP，保证用户的信息安全和账户安全尤为重要。</h5><p>虽然<strong>https</strong>协议能够保证绝大多数的通信安全（使用的是<strong>SSL</strong>协议，其实原理就是<strong>RSA</strong>加密原理），但是在实际生产中不能完全保证没有问题。比如，配置生产环境时配置成了<strong>http</strong>（意外失误），那就会产生一些问题，所以就算是使用<strong>https</strong>通信协议，还是应该考虑加密情况。</p>
+<a id="more"></a>
+<p><strong>加密考虑两个问题：1. 加密的可靠性；2. 加密解密的速度问题。</strong></p>
+<ol>
+<li><p>加密的可靠性</p>
+<p>没有什么加密可以说是永远安全的。曾经一度号称唯一的单项加密技术，绝不可能逆向解密的<strong>MD5</strong>非对称加密，早在2004年就已经被破译。</p>
+<p><strong>AES</strong>对称加密是非常安全的加密方法，秘钥长度有128，192，256，秘钥越长加密解密时间越长。曾经128加密也是感觉难以被人破解的，但是也已经被破解了，并且新型的攻击方法破解<strong>AES</strong>128位加密的速度只有此前的1/5。</p>
+</li>
+<li><p>加密解密的速度</p>
+<p><strong>AES</strong>是对称加密，加解密的算法一致。基本上就是矩阵运算，一共通过四个步骤，AddRoundKey – SubBytes – ShiftRows – MixColumns。基本上加密解密的时间与内容大小以及秘钥长度呈线性关系，加密后的数据必然变大，解密的时间一般是加密时间的两倍。</p>
+<p>目前比较安全的加密方式是<strong>RSA</strong>加密（也就是<strong>https</strong>实现原理之一，也是设计中需要使用的方法）。<strong>RSA</strong>加密安全性一致来源于它是非对称加密，公钥和私钥分离，一般公钥用于加密，私钥用于解密（公钥也可以解密）。基本原理就是<strong>互质数</strong>与<strong>欧拉函数</strong>。</p>
+<p>密钥对可以很多，但是加解密出来的数据一致加大了破解的难度。</p>
+<p>加密算法<strong><em>m^e - kn ≡ c</em></strong>，<strong><em>m</em></strong>为明文，<strong><em>c</em></strong>为密文，<strong><em>n</em></strong>是秘钥长度，<strong><em>e</em></strong>是加密秘钥。</p>
+<p>解密算法<strong><em>c^d  - kn ≡ m</em></strong>，<strong><em>m</em></strong>为明文，<strong><em>c</em></strong>为密文，<strong><em>n</em></strong>是秘钥长度，<strong><em>d</em></strong>是加密秘钥。</p>
+<p>所以，<strong>RSA</strong>加密的时间其实很短，但是解密的时间和解密的内容长度和秘钥的长度呈线性增长，并且会大大超过<strong>AES</strong>的解密时间。</p>
+</li>
+</ol>
+<p><strong>考虑应用场景，to c端应用，用户登录后，获取信息等。</strong> </p>
+<ol>
+<li><p>登录</p>
+<p>登录过程比较重要，后续一切信息的保密都是以登录为基础进行。如果攻击方劫持了通信并破解了加密内容，那泄露就不可避免了。</p>
+<p>所以登录采用强度较大的<strong>RSA</strong>加密进行。一般考虑加密性能问题，<strong>RSA</strong>秘钥长度<strong>1024 byte</strong>即可，如果不放心的<strong>2048 byte</strong>肯定够了。</p>
+<p>私钥可以长期保存，毕竟密钥对可以说是无穷的，没有私钥基本上解密无望。</p>
+<p>获取<strong>RSA</strong>的秘钥对应值可以是<strong>设备ID</strong>，也可以是<strong>IP地址</strong>，达到一一对应关系。客户端要使用的时候，首先请求服务器，查找一一对应相应秘钥，后即可进行<strong>RSA</strong>加密的通信。</p>
+</li>
+<li><p>登录之后 </p>
+<p>登录之后，进行其他相关数据前后端交互，使用<strong>RSA</strong>加密会感觉延时较大，特别是加密的内容比较多的时候。这个时候，应该使用<strong>AES</strong>进行加密，速度更快。但是<strong>AES</strong>秘钥，前后端一致，如果秘钥长期不变，容易被获取。所以，用户登录后，服务器应该发送一个<strong>RSA</strong>私钥加密的<strong>AES</strong>秘钥给到客户端，客户端通过<strong>RSA</strong>公钥解密后获得<strong>AES</strong>秘钥，秘钥长度<strong>256</strong>（128和192安全性都存疑）。</p>
+<p>客户端获得<strong>AES</strong>秘钥后，后续通信全部通过<strong>AES</strong>加密进行。</p>
+</li>
+</ol>
+<p><strong>全流程：</strong></p>
+<p><img src="/2017/06/07/前后端加密通信设计/1.jpg" width="600px"></p>
+
+  </div>
+</article>
+    </main>
+    <div>
+	<canvas id="background-canvas"></canvas>
+</div>
+  </body>
+</html>
