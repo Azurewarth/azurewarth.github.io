@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"name="viewport">
+  <title>Azurewarth</title>
+  <link rel="stylesheet" href="/./css/style.css">
+  <script src="/./js/canvas.js"></script>
+</head>
+  <body>
+    <header class="header">
+    <div class="blog-title">
+        <a href="https://github.com/Azurewarth" class="logo">Azurewarth</a>
+    </div>
+    <div class="blog-subtitle">
+        resume &amp; blog -- 247
+    </div>
+    <ul class="menu">
+        
+        <li class="menu-item">
+            <a href="/" class="menu-item-link">Home</a>
+        </li>
+        
+        <li class="menu-item">
+            <a href="/archives" class="menu-item-link">Archive</a>
+        </li>
+        
+        <li class="menu-item">
+            <a href="https://github.com/Azurewarth" class="menu-item-link">Github</a>
+        </li>
+        
+    </ul> 
+</header> 
+
+    <main class="main">
+      <article class="post">
+  <div class="post-title">
+    <h2 class="title">koa后端架构搭建</h2>
+  </div>
+   <div class="post-meta">
+    <span class="post-time"></span>
+  </div>
+  <div class="post-content">
+    <h5 id="koa是express团队的新作品。express相对比较成熟，体积较大，包含很多应用，更全面。koa体积很小，运行速度很快，主要是中间件的思想比较突出，是使用了ES6的框架。使用koa构建后端，会更灵活，而且自定程度更高。"><a href="#koa是express团队的新作品。express相对比较成熟，体积较大，包含很多应用，更全面。koa体积很小，运行速度很快，主要是中间件的思想比较突出，是使用了ES6的框架。使用koa构建后端，会更灵活，而且自定程度更高。" class="headerlink" title="koa是express团队的新作品。express相对比较成熟，体积较大，包含很多应用，更全面。koa体积很小，运行速度很快，主要是中间件的思想比较突出，是使用了ES6的框架。使用koa构建后端，会更灵活，而且自定程度更高。"></a>koa是express团队的新作品。express相对比较成熟，体积较大，包含很多应用，更全面。koa体积很小，运行速度很快，主要是中间件的思想比较突出，是使用了ES6的框架。使用koa构建后端，会更灵活，而且自定程度更高。</h5><a id="more"></a>
+<p>目录如下：</p>
+<p>​    通过启动目录中的<strong>app.js</strong>文件启动整个后端应用。如果需要<strong>babel</strong>转码，比如用到<strong>async</strong>和<strong>await</strong>关键字，则需要添加一个转码文件，在启动后转码，并启动应用。数据库以<strong>mongo</strong>为例。</p>
+<blockquote>
+<p>server</p>
+<blockquote>
+<p>controller</p>
+<blockquote>
+<p>​    index.js </p>
+<p>​    controller1.js</p>
+<p>​    controller2.js</p>
+</blockquote>
+<p>model</p>
+<blockquote>
+<p>​    index.js</p>
+<p>​    user.js</p>
+<p>​    user.model.js</p>
+</blockquote>
+<p>middleware</p>
+<blockquote>
+<p>​    middleware1.js</p>
+<p>​    middleware2.js</p>
+</blockquote>
+<p>router</p>
+<blockquote>
+<p>​    router.js</p>
+</blockquote>
+<p>app.js</p>
+<p>index.js</p>
+<p>config.js</p>
+</blockquote>
+</blockquote>
+<p><strong>babel</strong>转码如下：</p>
+<p><strong><em>index.js</em></strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> register = <span class="built_in">require</span>(<span class="string">'babel-register'</span>);    <span class="comment">// babel-register (use npm install)</span></div><div class="line">register(&#123;</div><div class="line">    <span class="attr">presets</span>: [<span class="string">'es2015'</span>, <span class="string">'stage-3'</span>]</div><div class="line">&#125;);</div><div class="line"><span class="built_in">require</span>(<span class="string">'babel-polyfill'</span>);                   <span class="comment">// babel-polyfill (use npm install)</span></div><div class="line"><span class="built_in">require</span>(<span class="string">'./app.js'</span>);</div><div class="line">global.navigator = &#123; <span class="attr">userAgent</span>: <span class="string">'all'</span> &#125;</div></pre></td></tr></table></figure>
+<p>启动服务入口如下：</p>
+<p><strong><em>app.js</em></strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line"><span class="meta">"use strict"</span>;</div><div class="line"><span class="keyword">const</span> Koa           = <span class="built_in">require</span>(<span class="string">'koa'</span>);</div><div class="line"><span class="keyword">const</span> path          = <span class="built_in">require</span>(<span class="string">'path'</span>);</div><div class="line"><span class="keyword">const</span> router        = <span class="built_in">require</span>(<span class="string">'./router/routes'</span>);</div><div class="line"><span class="keyword">const</span> bodyparser    = <span class="built_in">require</span>(<span class="string">'koa-bodyparser'</span>);</div><div class="line"><span class="keyword">const</span> mongoose      = <span class="built_in">require</span>(<span class="string">'mongoose'</span>);                  <span class="comment">// 使用mongoose操作数据库</span></div><div class="line"><span class="keyword">const</span> middleware1   = <span class="built_in">require</span>(<span class="string">'./middleware/middleware1'</span>);</div><div class="line"><span class="keyword">const</span> middleware2   = <span class="built_in">require</span>(<span class="string">'./middleware/middleware2'</span>);</div><div class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> Koa();</div><div class="line"><span class="comment">// set the port </span></div><div class="line"><span class="keyword">const</span> port = process.env.PORT || <span class="string">'8080'</span>;</div><div class="line"><span class="keyword">const</span> env = process.env.NODE_ENV || <span class="string">'dev'</span>;</div><div class="line"><span class="comment">// connect mongo</span></div><div class="line"><span class="comment">//!mongoose.connections &amp;&amp; </span></div><div class="line">mongoose.connect(<span class="string">'172.0.0.1'</span>, &#123;</div><div class="line">    <span class="attr">server</span>: &#123;</div><div class="line">        <span class="attr">poolSize</span>: <span class="number">20</span>,</div><div class="line">        <span class="attr">keepAlive</span>: <span class="number">1</span></div><div class="line">    &#125;</div><div class="line">&#125;, <span class="function"><span class="keyword">function</span> (<span class="params">err</span>) </span>&#123;</div><div class="line">    <span class="keyword">if</span> (err) &#123;</div><div class="line">        <span class="built_in">console</span>.log(err);</div><div class="line">    &#125;</div><div class="line">&#125;);</div><div class="line"><span class="comment">// set promise to mongoose </span></div><div class="line">mongoose.Promise = global.Promise;</div><div class="line"><span class="comment">// transform the request body data</span></div><div class="line">app.use(bodyparser());</div><div class="line"><span class="comment">// use first middleware</span></div><div class="line">app.use(middleware1);</div><div class="line"><span class="comment">// use second middleware</span></div><div class="line">app.use(middleware2);</div><div class="line"><span class="comment">// use router and start koa server···</span></div><div class="line">app</div><div class="line">    .use(router.routes())</div><div class="line">    .use(router.allowedMethods())</div><div class="line">    .listen(port, () =&gt; &#123;</div><div class="line">        <span class="built_in">console</span>.log(<span class="string">'Server started on port '</span> + port, <span class="string">', NODE_ENV is:'</span>, env);</div><div class="line">    &#125;);</div></pre></td></tr></table></figure>
+<hr>
+<p><strong>koa</strong>收到请求，会经过中间件处理。<strong>middleware</strong>为中间件结构，<strong>middleware</strong>文件夹中包含各种中间件，直接在<strong>app.js</strong>中引入使用即可。</p>
+<p><strong><em>middleware/middleware1.js</em></strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">init</span>(<span class="params">ctx, next</span>) </span>&#123;</div><div class="line">    <span class="keyword">try</span> &#123;</div><div class="line">        ......</div><div class="line">        ctx.body = <span class="string">'success'</span>;                   <span class="comment">// ctx.body will pass to next </span></div><div class="line">    &#125; <span class="keyword">catch</span> (err) &#123;</div><div class="line">        ctx.body = <span class="string">'error'</span>;</div><div class="line">    &#125;</div><div class="line">      </div><div class="line">    <span class="keyword">try</span>&#123;</div><div class="line">        ......</div><div class="line">        ctx.body = <span class="string">'success and also'</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">catch</span>(err)&#123;</div><div class="line">        ctx.body = <span class="string">'here is an error'</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="built_in">module</span>.exports =  init;</div></pre></td></tr></table></figure>
+<hr>
+<p>通过中间件处理后，使用<strong>koa-router</strong>监听所有的请求，每一种请求对应相应的处理方法。在此，定义了请求地址的规范。<strong>server</strong>是服务器名称，<strong>model</strong>（与此model层不同）是请求的模块，<strong>action</strong>是模块中的方法。</p>
+<p><strong><em>router/routes.js</em></strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">const Router        = require('koa-router');</div><div class="line">const controllers   = require('../controllers/index');    // request to controller and do something</div><div class="line">const router        = new Router();</div><div class="line">/**</div><div class="line"> * handle server request </div><div class="line"> * :model ==&gt; used module</div><div class="line"> * :action ==&gt; function in module</div><div class="line"> */</div><div class="line">router.post("/server/:model/:action", async (ctx, next) =&gt; &#123;</div><div class="line">    try &#123;</div><div class="line">        if (controllers[ctx.params.model] &amp;&amp; controllers[ctx.params.model][ctx.params.action]) &#123;</div><div class="line">            //find the request in control</div><div class="line">            ctx.body = await controllers[ctx.params.model][ctx.params.action](ctx);</div><div class="line">        &#125; else &#123;</div><div class="line">            //model or action not exit</div><div class="line">            logger.info("warning: ", ctx.params);</div><div class="line">            ctx.body = "warning;</div><div class="line">        &#125;</div><div class="line">    &#125; catch (err) &#123;</div><div class="line">        //exceptions</div><div class="line">        logger.info("error：", err, ctx.params);</div><div class="line">        ctx.body = "error"</div><div class="line">    &#125;</div><div class="line">&#125;);</div><div class="line">module.exports = router;</div></pre></td></tr></table></figure>
+<hr>
+<p>请求过来，通过<strong>router</strong>找到相应需要执行的模块中的方法。在<strong>controller</strong>文件夹中，定义相关的模块和方法。<strong>index</strong>作为怎个<strong>controller</strong>的出口，将各个模块引入后在输出。</p>
+<p><strong><em>controller/index.js</em></strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> controller1 = <span class="built_in">require</span>(<span class="string">'./controller1'</span>);</div><div class="line"><span class="keyword">const</span> controller2 = <span class="built_in">require</span>(<span class="string">'./controller2'</span>);</div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">	controller1,</div><div class="line">    controller2</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>各个模块的写法如下：</p>
+<p><strong><em>controller/controller1.js</em></strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> &#123; user &#125; = <span class="built_in">require</span>(<span class="string">'../model'</span>);                   <span class="comment">// use model to manipulate database</span></div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">    login(ctx) &#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span> (<span class="keyword">async</span> (resolve, reject) =&gt; &#123;</div><div class="line">            <span class="keyword">var</span> body =  ctx.requset.body;</div><div class="line">          	<span class="keyword">var</span> userInfo = <span class="keyword">await</span> use.search(&#123; <span class="attr">name</span>: body.name, <span class="attr">password</span>: body.password &#125;);</div><div class="line">            <span class="keyword">if</span>(userInfo) &#123;</div><div class="line">                resolve(<span class="string">"登录成功"</span>);</div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<hr>
+<p>为了符合<strong>MVC</strong>架构理念，将<strong>model</strong>层、<strong>controller</strong>层和<strong>view</strong>层分离。<strong>model</strong>文件夹中属于<strong>model</strong>层范围，用于数据库的操作。<strong>index</strong>为整个文件夹的出口。</p>
+<p><strong><em>model/index.js</em></strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> user    = <span class="built_in">require</span>(<span class="string">'./user'</span>);</div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">    user</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong><em>model/user.js</em></strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> user = <span class="built_in">require</span>(<span class="string">'./user.model'</span>);</div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">    <span class="comment">/**</span></div><div class="line">     * insert data to mongodb</div><div class="line">     */</div><div class="line">    insert(data) &#123;        </div><div class="line">        <span class="keyword">return</span> user(data).save();               <span class="comment">// mongoose API</span></div><div class="line">    &#125;,</div><div class="line">    <span class="comment">/**</span></div><div class="line">     * find data from db</div><div class="line">     */</div><div class="line">    search(data) &#123;</div><div class="line">        <span class="keyword">return</span> user.findOne(data);              <span class="comment">// mongoose API</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong><em>model/user.model.js</em></strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> mongoose = <span class="built_in">require</span>(<span class="string">'mongoose'</span>);</div><div class="line"><span class="keyword">var</span> Schema = mongoose.Schema;</div><div class="line"><span class="keyword">var</span> user = <span class="keyword">new</span> Schema(&#123;                         <span class="comment">// mongoose define data scheme</span></div><div class="line">    name: &#123; <span class="attr">type</span>: <span class="built_in">String</span> &#125;,</div><div class="line">    <span class="attr">age</span>: &#123; <span class="attr">type</span>: <span class="built_in">Number</span> &#125;</div><div class="line">&#125;);</div><div class="line"><span class="built_in">module</span>.exports = mongoose.model(<span class="string">'user'</span>, user)</div></pre></td></tr></table></figure>
+<p>如下图：</p>
+<p><img src="/2017/06/08/koa后端架构搭建/1.jpg" width="600px"></p>
+
+  </div>
+</article>
+    </main>
+    <div>
+	<canvas id="background-canvas"></canvas>
+</div>
+  </body>
+</html>
