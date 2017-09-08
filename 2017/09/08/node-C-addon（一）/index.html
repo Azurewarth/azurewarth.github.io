@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"name="viewport">
+  <title>Azurewarth</title>
+  <link rel="stylesheet" href="/./css/style.css">
+  <script src="/./js/canvas.js"></script>
+</head>
+  <body>
+    <header class="header">
+    <div class="blog-title">
+        <a href="https://github.com/Azurewarth" class="logo">Azurewarth</a>
+    </div>
+    <div class="blog-subtitle">
+        resume &amp; blog -- 247
+    </div>
+    <ul class="menu">
+        
+        <li class="menu-item">
+            <a href="/" class="menu-item-link">Home</a>
+        </li>
+        
+        <li class="menu-item">
+            <a href="/archives" class="menu-item-link">Archive</a>
+        </li>
+        
+        <li class="menu-item">
+            <a href="https://github.com/Azurewarth" class="menu-item-link">Github</a>
+        </li>
+        
+    </ul> 
+</header> 
+
+    <main class="main">
+      <article class="post">
+  <div class="post-title">
+    <h2 class="title">node C++ addon（一）</h2>
+  </div>
+   <div class="post-meta">
+    <span class="post-time"></span>
+  </div>
+  <div class="post-content">
+    <p>#####node的C++插件其实是一个node上的实验性功能，但是如果遇到性能瓶颈，就能够有大用处。</p>
+<a id="more"></a>
+<p><strong>Node和C++有什么关系？</strong></p>
+<p>Node其实就是跑在了V8引擎上的Javascript。丹麦的开发大神们选择了C++进行开发，使得JavaScript在运行之前，并不是将Javascript转换成字节码或解释执行，而是将其编译成原生机器码，并且使用了如内联缓存等方法来提高性能。有了这些功能，JavaScript程序在V8引擎下的运行速度媲美二进制程序。所以Javascript就飞起来了。</p>
+<p>就相当于Javascript跑在了C++内容之上。</p>
+<p>Node C++ Addon其实是一个实验性的功能。</p>
+<p>在使用RSA解密的时候，发现npm包node-rsa在RSA加解密时，可以让人等到花都谢了。性能这种东西，心里还没点数吗？</p>
+<p>结果换了一个npm包ursa进行RSA加解密，怎么突然就飞起来了呢？ursa基本上原理就是运用了C++ addon，让C++发挥了性能的优势。</p>
+<p>要用这东西，先要安装一个node-gyp的npm包。作者是Nathan Rajlich，node源码的重要开发者，一看到这个就稳了。</p>
+<p><strong>安装：</strong></p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install -g <span class="keyword">node</span><span class="title">-gyp</span></div></pre></td></tr></table></figure>
+<p>依赖条件如下：</p>
+<p><img src="/2017/09/08/node-C-addon（一）/1.png" width="600px"></p>
+<p>python只能2.7，多了不行，如果已经装了别的版本的python可以使用如下命令：</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install <span class="keyword">node</span><span class="title">-gyp</span> -g --<span class="attr">python=</span>python2.<span class="number">7</span></div></pre></td></tr></table></figure>
+<p><strong>###########装个依赖累死人分割线###########</strong></p>
+<p><strong>先来个例子</strong></p>
+<p>目录结构如下：</p>
+<p><img src="/2017/09/08/node-C-addon（一）/2.png" width="600px"></p>
+<p><strong>hello.cc： 编写HELLO WORL程序的C++文件；</strong></p>
+<p><strong>binding.gyp : node-gyp编译时需要的配置文件，只能叫这个名字；</strong></p>
+<p><strong>build：编译成功后可以引入node的.node文件存放位置；</strong></p>
+<hr>
+<p><strong>hello.cc：</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;node.h&gt;                  // 引入node.h头文件    包含各种方法  比如  NODE_SET_METHOD</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;v8.h&gt;                    //  引入v8.h头文件        包含各种类      比如  Value  Number String Boolean等 </span></span></div><div class="line"></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> v8;</div><div class="line"></div><div class="line"><span class="comment">// 传入一个参数，args[0]直接可以获取到传入的参数</span></div><div class="line"><span class="comment">// FunctionCallbackInfo 必须传入</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">hello</span><span class="params">(<span class="keyword">const</span> FunctionCallbackInfo&lt;Value&gt;&amp; args)</span> </span>&#123;                          </div><div class="line"></div><div class="line">  <span class="comment">// 定义Isolate指针是必须的，调用GetCurrent方法获取当前参数引用，也可以写成  Isolate* isolate = args.GetIsolate()  更为直观</span></div><div class="line">  Isolate* isolate = Isolate::GetCurrent();</div><div class="line"></div><div class="line">    <span class="comment">// 拼接String 然后传递给GetReturnValue方法   一句话就搞定了有木有</span></div><div class="line">  args.GetReturnValue().Set(String::Concat(Handle&lt;String&gt;::Cast(args[<span class="number">0</span>]), String::NewFromUtf8(isolate, <span class="string">" world"</span>)));</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 相当于在 exports 对象中添加 &#123; hello: hello &#125;</span></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">(Handle&lt;Object&gt; exports)</span> </span>&#123;</div><div class="line">  NODE_SET_METHOD(exports, <span class="string">"hello"</span>, hello);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 将 export 对象暴露出去</span></div><div class="line"><span class="comment">// 原型 `NODE_MODULE(module_name, Initialize)`</span></div><div class="line">NODE_MODULE(hello, init);</div></pre></td></tr></table></figure>
+<p>上述代码，完成了参数输入然后和“world”进行了字符串拼接，最后返回拼接后字符串。</p>
+<p><strong>binding.gyp：（详细请查看 (<a href="https://chromium.googlesource.com/external/gyp/+/master/docs/UserDocumentation.md)）" target="_blank" rel="external">https://chromium.googlesource.com/external/gyp/+/master/docs/UserDocumentation.md)）</a></strong></p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="attr">"targets"</span>: [                                // 编译目标，可以有多个同事编译</div><div class="line">       &#123;</div><div class="line">          <span class="attr">"target_name"</span>: <span class="string">"hello"</span>,     </div><div class="line">          <span class="attr">"sources"</span>: [ <span class="string">"hello.cc"</span> ]      	   // 编译的C++文件，可以是多个</div><div class="line">       &#125;</div><div class="line">    ]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>命令行开始编译：</strong></p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ <span class="keyword">node</span><span class="title">-gyp</span> configure</div><div class="line">$ <span class="keyword">node</span><span class="title">-gyp</span> builde</div></pre></td></tr></table></figure>
+<p><strong>结果如下：</strong></p>
+<p><img src="/2017/09/08/node-C-addon（一）/3.png" width="600px"></p>
+<p>Release文件夹中，就包含了hello.node可以使用Javascript引入并运行的模块。</p>
+<p><strong>测试的hello.js文件如下：</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> test = <span class="built_in">require</span>(<span class="string">'./build/Release/hello.node'</span>);</div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(test.hello(<span class="string">'hello'</span>));</div></pre></td></tr></table></figure>
+<p><strong>命令行运行node hello.js，结果如下：</strong></p>
+<p><img src="/2017/09/08/node-C-addon（一）/4.png" width="600px"></p>
+<p><strong>###########################################</strong></p>
+<p><strong>v8.h</strong>头文件中包含了所有的<strong>api</strong>和<strong>类</strong>，其中重要的有几个：</p>
+<p><strong>1.  Value  :  </strong>Data是JavaScript中各种结构的基础，Value是JavaScript中各种对象的基类。 JavaScript 类型在 C++ 中均有对应的自定义类型，如 String、Object 、Date 、Array 等，严格遵守在 JavaScript 中的继承关系。</p>
+<p><strong>2. </strong> <strong>Handle： </strong>其实就是用来托管Javascript中可以使用的类的，在C++中使用这些类，必须使用Handle托管，使用GC管理了生命周期。Handle分为Local和Presistent。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">(Handle&lt;Object&gt; exports)</span> </span>&#123;                         <span class="comment">// 所以这里写成  void init(Local&lt;Object&gt; exports)  也没什么毛病</span></div><div class="line">  NODE_SET_METHOD(exports, <span class="string">"hello"</span>, hello);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>3.  HandleScope：</strong> 就是管理Handle用的容器，管理Handle的生命周期过程，当HandleScope结束时，Handle也就被释放了，会引起Heap中的对象引用的更新。</p>
+<p><strong>4.  Context： </strong>就是代码运行的上下文，javascript代码的执行都是存在于Context中的。那这个玩意为什么在上面的代码中木有呢？</p>
+<p>其实写得完整一点，调用回调函数输出的C++代码如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;node.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;v8.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> v8;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">hello</span><span class="params">(<span class="keyword">const</span> FunctionCallbackInfo&lt;Value&gt;&amp; args)</span> </span>&#123;</div><div class="line">  <span class="comment">// 使用 HandleScope 来管理生命周期</span></div><div class="line">  Isolate* isolate = args.GetIsolate();</div><div class="line">  <span class="function">HandleScope <span class="title">scope</span><span class="params">(isolate)</span></span>;</div><div class="line"></div><div class="line">  <span class="comment">// callback, 使用Cast方法来转换</span></div><div class="line">  Local&lt;Function&gt; callback = Local&lt;Function&gt;::Cast(args[<span class="number">1</span>]);</div><div class="line">  Local&lt;Value&gt; argv[<span class="number">1</span>] = &#123;</div><div class="line">    <span class="comment">// 拼接String</span></div><div class="line">    String::Concat(Local&lt;String&gt;::Cast(args[<span class="number">0</span>]), String::NewFromUtf8(isolate, <span class="string">" world"</span>))</div><div class="line">  &#125;;</div><div class="line">  <span class="comment">// 调用回调, 参数: 当前上下文，参数个数，参数列表      GetCurrentContext 方法获得运行的上下文</span></div><div class="line">  callback-&gt;Call(isolate-&gt;GetCurrentContext()-&gt;Global(), <span class="number">1</span>, argv);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">(Handle&lt;Object&gt; exports)</span> </span>&#123;</div><div class="line">  NODE_SET_METHOD(exports, <span class="string">"hello"</span>, hello);</div><div class="line">&#125;</div><div class="line"></div><div class="line">NODE_MODULE(test, init);</div></pre></td></tr></table></figure>
+<p>编译之后，测试hello.js需要修改成回调函数的形式：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> test = <span class="built_in">require</span>(<span class="string">'./build/Release/hello.node'</span>);</div><div class="line"></div><div class="line">test.hello(<span class="string">'hello'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">data</span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(data);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>运行node hello.js 同样输出了 “hello world“。</p>
+<p><strong>################本篇结束分割线###################</strong></p>
+<p>那这个玩意到底是有啥用？</p>
+<ol>
+<li>性能问题：</li>
+</ol>
+<p><img src="/2017/09/08/node-C-addon（一）/5.png" width="600px"></p>
+<p>在文章（二）中，我们用fib.cc来做点很简单的事情，就可以看出性能的差距，在密集计算的服务当中，使用node C++ addon还是有优势的。</p>
+<ol>
+<li>扩展node内嵌模块：</li>
+</ol>
+<p>可以扩展node内嵌模块，加快加载速度等。</p>
+
+  </div>
+</article>
+    </main>
+    <div>
+	<canvas id="background-canvas"></canvas>
+</div>
+  </body>
+</html>
