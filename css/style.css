@@ -16,10 +16,11 @@ body {
   position: absolute;
   top: 0;
   bottom: 0;
+  z-index: 999;
   background-color: rgba(255,255,255,0.8);
   opacity: 0;
   transition: 1.5s;
-  animation: showhead 3s;
+  animation: showhead 2s;
 }
 .header:hover {
   opacity: 0.8;
@@ -128,7 +129,7 @@ body {
   box-shadow: 0 0 2px #ddd;
   opacity: 0.8;
   overflow: hidden;
-  animation: showpost 3s ease;
+  animation: showpost 1s ease;
 }
 .posts .post:first-child {
   margin-top: 0;
@@ -291,7 +292,7 @@ body {
   border-left: 3px solid #333;
   border-bottom: 3px solid #333;
   transform: rotateZ(-45deg);
-  animation: shrink 3s infinite;
+  animation: shrink 2s infinite;
 }
 .info-container {
   display: block;
@@ -309,7 +310,7 @@ body {
 }
 .detail {
   display: block;
-  animation: articleshow 8s ease;
+  animation: articleshow 1s;
 }
 .detail ul,
 li {
@@ -317,13 +318,13 @@ li {
 }
 .skill {
   display: flex;
-  justify-content: space-around;
+  /* justify-content: space-around; */
 }
 .skill ul {
   display: flex;
-  width: 200px;
-  justify-contetn: space-between;
-  flex-flow: wrap;
+  width: 100px;
+  justify-content: space-between;
+  /* flex-flow: wrap; */
 }
 .skill ul li {
   border: 1px solid #000;
@@ -445,7 +446,7 @@ li {
     opacity: 0;
   }
   50% {
-    opacity: 0;
+    opacity: .5;
   }
   100% {
     opacity: 1;

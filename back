@@ -1,0 +1,68 @@
+
+<article class="post">
+      <p><strong>文易翀</strong> <strong>前端工程师</strong></p>
+
+      <hr />
+
+      <h4>Introduce</h4>
+
+      <p><code></code>`go
+        package yichong</p>
+
+      <p>import (
+        &quot;creative&quot;
+        &quot;passionate&quot;
+        &quot;responsibility&quot;
+        &quot;teamwork&quot;
+        &quot;hardWork&quot;
+        &quot;energy&quot;
+        )</p>
+
+      <p>func main() {
+        oEnergy := energy.Constructor()</p>
+
+      <pre><code>REALIZEDREAM:
+oEnergy.fill()
+for oEnergy.remain() {
+    creative.Use()
+    passionate.Use()
+    responsibility.Use()
+    teamwork.Use()
+    hardWork.Use()
+
+    oEnergy.consume()
+}
+goto REALIZEDREAM</code></pre>
+
+      <p>}
+        <code></code>`</p>
+
+      <h4>Brief</h4>
+
+      <ol>
+        <li>前端开发工程师，使用Javascript</li>
+        <li>Node.js中间服务层</li>
+        <li>小程序开发，app开发，H5开发，公众号开发</li>
+        <li>了解Going</li>
+      </ol>
+
+      <h4>Education</h4>
+
+      <p><strong>| 本科 西安交通大学 生命科学与技术</strong></p>
+
+      <p><strong>| 硕士 西安交通大学 基础医学</strong></p>
+
+      <h4>Experience</h4>
+
+      <ul>
+        <li>
+          <p><strong>2018 - 今 Tencent IEG 智能创新</strong></p>
+        </li>
+        <li>
+          <p><strong>2017 - 2018 友金所 研发中心</strong></p>
+        </li>
+        <li>
+          <p><strong>2015.7 - 2017 普联技术 移动互联网</strong></p>
+        </li>
+      </ul>
+    </article>

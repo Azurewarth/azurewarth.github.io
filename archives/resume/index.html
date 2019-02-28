@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <title>Azurewarth</title>
+  <link href="https://cdn.bootcss.com/highlight.js/8.0/styles/monokai_sublime.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/./css/style.css">
+  <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+  <script src="https://cdn.bootcss.com/marked/0.6.1/marked.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/8.0/highlight.min.js"></script>
+  <script src="/./js/canvas.js"></script>
+</head>
+
+<body>
+  <main class="main">
+    <article class="post">
+      <div id="show"></div>
+    </article>
+  </main>
+  <div>
+    <canvas id="background-canvas"></canvas>
+  </div>
+</body>
+<script>
+  marked.setOptions({
+    renderer: new marked.Renderer(),
+    gfm: true,
+    tables: true,
+    breaks: false,
+    pedantic: false,
+    sanitize: false,
+    smartLists: true,
+    smartypants: false,
+    highlight: function (code, lang) {
+      // return   hljs.highlight(lang, code, false,true).value;
+      return hljs.highlightAuto(code).value;
+    }
+  });
+  var val = 
+  `**文易翀**	**前端工程师**
+  ---
+
+  #### Introduce
+  ---
+  \`\`\`
+  package yichong
+
+  import (
+      "creative"
+      "passionate"
+      "responsibility"
+      "teamwork"
+      "hardWork"
+      "energy"
+  )
+  func main() {
+      oEnergy := energy.Constructor()
+      REALIZEDREAM:
+      oEnergy.fill()
+      for oEnergy.remain() {
+          creative.Use()
+          passionate.Use()
+          responsibility.Use()
+          teamwork.Use()
+          hardWork.Use()
+          
+          oEnergy.consume()
+      }
+      goto REALIZEDREAM
+  }
+  \`\`\`
+
+  \b
+  #### Brief
+  ---
+
+  1. 前端开发工程师，使用Javascript
+  2. Node.js中间服务层
+  3. 小程序开发，app开发，H5开发，公众号开发
+  4. 了解Going
+
+  
+\b
+  #### Education
+  ---
+  - 	本科	西安交通大学	生命科学与技术
+
+  - 	硕士	西安交通大学	基础医学
+
+
+\b
+  #### Experience
+  ---
+  - **2018 - 今	  Tencent	IEG	智能创新**
+
+    1. 腾讯听听音响运营平台前端和后台开发（vue + Nodejs）
+    2. AI对话情景配置系统前端和后台开发（vue + Nodejs）
+    3. 腾讯听听公众号开发（H5）
+    4. 猜歌微信小程序开发（wechat applet）
+    5. uniapp开发论坛应用demo及所需后台（uniapp + thinkjs）
+    6. go转发层部分开发（go）
+
+  - **2017 - 2018	友金所	研发中心**
+    1. PC官网前端和后台的开发（多页面 + Nodejs）
+    2. 云贷APP后台开发（Nodejs）
+    3. 展业PC视频审核系统前端开发（React ）
+    4. nodejs爬虫开发（Nodejs + Phantomjs）
+    5. 活动宣传页等前端开发（H5）
+
+
+  - **2015.7 - 2017	普联技术	移动互联网**
+  `
+  console.log(val)
+  $("#show").html(marked(val));
+  
+
+</script>
+
+</html>
