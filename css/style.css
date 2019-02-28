@@ -305,7 +305,7 @@ body {
   border: 1px solid #000;
   border-radius: 20px;
   line-height: 60px;
-  animation: shineup 4s ease;
+  /* animation: shineup 4s ease; */
 }
 .detail {
   display: block;
